@@ -19,7 +19,7 @@ class Links extends React.Component {
         e.preventDefault();
         const url = this.refs.url.value.trim();
         if(!!url){
-            LinksDb.insert({url, userId: Meteor.userId()});
+            Meteor.call('links.insert', url);
             this.refs.url.value = '';
         }
     }

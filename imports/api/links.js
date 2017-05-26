@@ -17,3 +17,15 @@ if(Meteor.isServer){
         return LinksDb.find({userId: this.userId});
     });
 }
+
+Meteor.methods({
+    'links.insert'(url){
+        if(!this.userId){
+            throw new Meteor.error('auth-error');
+        }
+        LinksDb.insert({
+            url,
+            userId: this.userId
+        });
+    }
+});
