@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tracker } from 'meteor/tracker';
-import Routes, {onAuthChange} from '/imports/routes/Router';
+import Routes, {onAuthChange} from '/imports/react/routes/Router';
 
 
 class App extends React.Component {
