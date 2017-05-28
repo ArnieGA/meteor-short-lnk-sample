@@ -1,7 +1,7 @@
 import { Accounts } from 'meteor/accounts-base';
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
-import PropTypes from 'react-prop-types';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 class Signup extends React.Component {

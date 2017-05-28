@@ -1,6 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 import {urlSchema} from '/imports/startup/simple-schema-config';
+import shortid from 'shortid';
 
 export const LinksDb = new Mongo.Collection('links');
 
@@ -33,6 +34,7 @@ Meteor.methods({
         // URL doesn't exist, add it:
         if(Meteor.isClient) console.clear(); // clear console on client.
         LinksDb.insert({
+            _id: shortid.generate(),
             url: protocol + host,
             userId: this.userId
         });
