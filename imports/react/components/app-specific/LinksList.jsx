@@ -8,7 +8,8 @@ export default class LinksList extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            links: []
+            links: [],
+            showHidden: false
         };
         this.renderLinksListItems = this.renderLinksListItems.bind(this);
     }
@@ -16,7 +17,7 @@ export default class LinksList extends React.Component{
         // Start the links tracker
         this.linksTracker = Tracker.autorun(()=>{
             Meteor.subscribe('links');
-            const dbLinks = LinksDb.find().fetch();
+            const dbLinks = LinksDb.find({visible: !this.state.showHidden}).fetch();
             this.setState({links: dbLinks});
         });
     }

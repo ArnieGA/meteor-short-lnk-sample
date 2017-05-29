@@ -1,6 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
-import {urlSchema} from '/imports/startup/simple-schema-config';
+import SimpleSchema, {urlSchema} from '/imports/startup/simple-schema-config';
 import shortid from 'shortid';
 
 export const LinksDb = new Mongo.Collection('links');
@@ -36,7 +36,21 @@ Meteor.methods({
         LinksDb.insert({
             _id: shortid.generate(),
             url: protocol + host,
-            userId: this.userId
+            userId: this.userId,
+            visible: true
         });
+    },
+    'links.setVisibility'(linkId, newVisibility){
+        if(!this.userId) throw new Meteor.error('auth-error');
+        new SimpleSchema({
+            _id: {type: String, min: 1},
+            visible: {type: Boolean}
+        }).validate({
+            _id: linkId, visible: newVisibility
+        });
+        LinksDb.update(
+            {userId: this.userId, _id: linkId}, 
+            {$set:{visible: newVisibility}}
+        );
     }
 });
