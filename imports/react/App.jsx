@@ -1,5 +1,6 @@
 import React from 'react';
 import { Tracker } from 'meteor/tracker';
+import { Session } from 'meteor/session'; //<-- meteor add session
 import Routes, {onAuthChange} from '/imports/react/routes/Router';
 
 
@@ -10,9 +11,12 @@ class App extends React.Component {
             const isAuthenticated = !!Meteor.userId();
             onAuthChange(isAuthenticated);
         });
+        // Set default value for the showHidden state:
+        Session.set('showHidden', false);
     }
     componentWillUnmount(){
         this.authTracker.stop();
+        this.linksTracker.stop();
     }
     render(){
         return(

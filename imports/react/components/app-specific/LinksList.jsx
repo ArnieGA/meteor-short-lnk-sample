@@ -1,5 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import { Session } from 'meteor/session'; //<-- meteor add session
 import { Tracker } from 'meteor/tracker';
 import { LinksDb } from '/imports/api/links';
 import LinkItem from '/imports/react/components/app-specific/LinkItem';
@@ -8,8 +9,7 @@ export default class LinksList extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            links: [],
-            showHidden: false
+            links: []
         };
         this.renderLinksListItems = this.renderLinksListItems.bind(this);
     }
@@ -17,7 +17,7 @@ export default class LinksList extends React.Component{
         // Start the links tracker
         this.linksTracker = Tracker.autorun(()=>{
             Meteor.subscribe('links');
-            const dbLinks = LinksDb.find({visible: !this.state.showHidden}).fetch();
+            const dbLinks = LinksDb.find({visible: !Session.get('showHidden')}).fetch();
             this.setState({links: dbLinks});
         });
     }
