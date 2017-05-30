@@ -31,6 +31,7 @@ export default class LinkItem extends React.Component {
             <div>
                 <p>{this.props.url}</p>
                 <p>{this.props.shortUrl}</p>
+                <p>{`Visited: ${this.props.visitedCount} time(s). Last visited at: ${this.props.lastVisitedAt}`}</p>
                 <button ref="copyButton" data-clipboard-text={this.props.shortUrl}>{this.state.copied ? 'Copied' : 'Copy'}</button>
                 <button ref="hideButton" onClick={this.setVisibility.bind(this)}>
                     {this.props.visible ? 'Hide' : 'Unhide'}
@@ -44,6 +45,8 @@ LinkItem.propTypes = {
     shortUrl: PropTypes.string.isRequired,
     _id: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
     visible: PropTypes.bool.isRequired,
-    userId: PropTypes.string.isRequired
+    visitedCount: PropTypes.number.isRequired,
+    lastVisitedAt: PropTypes.number
 };

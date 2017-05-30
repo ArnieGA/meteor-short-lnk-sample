@@ -16,7 +16,6 @@ class App extends React.Component {
     }
     componentWillUnmount(){
         this.authTracker.stop();
-        this.linksTracker.stop();
     }
     render(){
         return(
