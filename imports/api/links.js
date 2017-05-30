@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
+import moment from 'moment';
 import SimpleSchema, {urlSchema} from '/imports/startup/simple-schema-config';
 import shortid from 'shortid';
 
@@ -61,7 +62,7 @@ Meteor.methods({
         }).validate({_id});
         LinksDb.update({_id},{
             $set:{
-                lastVisitedAt: new Date().getTime()
+                lastVisitedAt: moment().unix()
             },
             $inc: {
                 visitedCount: 1
