@@ -31,7 +31,7 @@ export default class LinkItem extends React.Component {
         const visitedTimes = this.props.visitedCount;
         const { lastVisited } = this.props;
         const visitMessage = visitedTimes === 1 ? `Visited ${visitedTimes} time` : visitedTimes > 1 ? `Visited ${visitedTimes} times` : 'Not visited yet';
-        let lastVisitedMessage = (typeof this.props.lastVisitedAt === 'number') ? ` - (Last visited ${moment(this.props.lastVisitedAt).fromNow()})` : '';
+        let lastVisitedMessage = (typeof this.props.lastVisitedAt === 'number') ? ` - (Last visited ${moment.unix(this.props.lastVisitedAt).fromNow()})` : '';
         return <p>{`${visitMessage}${lastVisitedMessage}`}</p>
     }
     render(){
@@ -40,6 +40,7 @@ export default class LinkItem extends React.Component {
                 <p>{this.props.url}</p>
                 <p>{this.props.shortUrl}</p>
                 {this.renderStats()}
+                <a href={this.props.shortUrl} target='_blank'>Visit</a>
                 <button ref="copyButton" data-clipboard-text={this.props.shortUrl}>{this.state.copied ? 'Copied' : 'Copy'}</button>
                 <button ref="hideButton" onClick={this.setVisibility.bind(this)}>
                     {this.props.visible ? 'Hide' : 'Unhide'}

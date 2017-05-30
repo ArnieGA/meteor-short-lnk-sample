@@ -10,10 +10,14 @@ export default class AddLink extends React.Component {
         super(props);
         this.state = {
             typedUrl: '',
-            openModal: false
+            openModal: false,
+            error: ''
         };
         this.onSubmit = this.onSubmit.bind(this);
         this.onTypedUrlChange = this.onTypedUrlChange.bind(this);
+        this.resetModal = this.resetModal.bind(this);
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
     onSubmit(e) {
         e.preventDefault();
@@ -23,12 +27,18 @@ export default class AddLink extends React.Component {
             const selectedProtocol = this.refs.protocols.options[selectedIndex].text;
             Meteor.call('links.insert', selectedProtocol, host, (err, response) => {
                 if (!err) {
-                    this.setState({ typedUrl: '', openModal: false });
+                    this.setState({ openModal: false });
+                    this.resetModal();
                 }
                 else {
+                    this.setState({error: err.reason});
                     this.refs.host.select();
                 }
             });
+        }
+        else {
+            this.setState({error: 'Please enter a valid URL to continue.'});
+            this.refs.host.focus();
         }
     }
     onTypedUrlChange(e) {
@@ -39,12 +49,25 @@ export default class AddLink extends React.Component {
             return <option key={`protocol_${uuid()}`} value={protocol}>{`${protocol}://`}</option>
         });
     }
+    // MODAL FUNCTIONS:
+    openModal(){
+        this.setState({openModal:true});
+    }
+    closeModal(){
+        this.setState({typedUrl: '', error: '', openModal: false});
+    }
+    resetModal(){
+        this.setState({typedUrl:'', error: ''});
+    }
     render() {
         return (
             <div>
-                <button onClick={() => this.setState({ openModal: true })}>+ Add Link</button>
-                <Modal isOpen={this.state.openModal} contentLabel='Add link'>
-                    <p>Add Link</p>
+                <button onClick={this.openModal}>+ Add Link</button>
+                <Modal isOpen={this.state.openModal} contentLabel='Add link' 
+                    onAfterOpen={()=>this.refs.host.focus()} 
+                    onRequestClose={this.closeModal}>
+                    <h1>AddLink</h1>
+                    {!!this.state.error ? <p>{this.state.error}</p> : undefined}
                     <form onSubmit={this.onSubmit}>
                         <select name="protocols" ref="protocols">
                             {this.renderProtocolOptions()}
@@ -54,7 +77,7 @@ export default class AddLink extends React.Component {
                             onChange={this.onTypedUrlChange} />
                         <button>Add Link</button>
                     </form>
-                    <button onClick={() => this.setState({ openModal: false, typedUrl: '' })}>Cancel</button>
+                    <button onClick={this.closeModal}>Cancel</button>
                 </Modal>
             </div>
         );

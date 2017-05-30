@@ -24,7 +24,7 @@ export const userCredentialsSchema = new SimpleSchema({
 export const urlSchema = new SimpleSchema({
     url: {
         type: String,
-        label: 'The LINK you entered',
+        label: 'The url you entered',
         regEx: SimpleSchema.RegEx.Url2
     }
 });
