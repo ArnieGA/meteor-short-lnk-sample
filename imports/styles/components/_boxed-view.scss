@@ -17,10 +17,24 @@
     background-color: $boxed_view_box_bg;
     padding: 2.4rem 5rem;
     text-align: center;
-    // width: 24rem;
+    width: 24rem;
 }
 
 .boxed-view__form {
     display: flex;
     flex-direction: column;
+}
+
+.boxed-view__child-container {
+    display: flex;
+}
+
+.flex-child--expanded {
+    flex-grow: 1;
+}
+
+.boxed-view__error {
+    color: red;
+    font-size: $base_font_size - 0.2;
+    text-align: justify;
 }

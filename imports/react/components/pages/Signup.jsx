@@ -3,24 +3,27 @@ import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Tooltip from 'react-portal-tooltip';
 
 class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: ''
+      error: '',
+      pwdTtipActive: false
     };
     this.validatePassword = this.validatePassword.bind(this);
     this.clearFields = this.clearFields.bind(this);
   }
   onSubmit(e) {
     e.preventDefault();
+    this.setState({pwdTtipActive: false});
     let email = this.refs.email.value.trim();
     let password = this.refs.password.value.trim();
     let rePassword = this.refs.rePassword.value.trim();
     if (!!email && !!password && !!rePassword) {
       if (!this.validatePassword(password)) {
-        this.setState({ error: 'Invalid password. Passwords must be 6-8 characters long and include at least one Uppercase letter, one Lowercase letter, one digit and one special character.' });
+        this.setState({ error: 'Invalid password.' });
         this.refs.password.focus();
         this.clearFields(['password', 'rePassword']);
         return;
@@ -67,15 +70,32 @@ class Signup extends React.Component {
       });
     }
   }
+  openPwdTtip(){
+    this.setState({pwdTtipActive: true});
+  }
+  closePwdTtip(){
+    this.setState({pwdTtipActive: false});
+  }
   render() {
     return (
       <div className="boxed-view">
         <div className="boxed-view__box">
           <h1>Signup form</h1>
-          {this.state.error ? <p>{this.state.error}</p> : undefined}
+          {this.state.error ? <p className="boxed-view__error">{this.state.error}</p> : undefined}
           <form className='boxed-view__form' onSubmit={this.onSubmit.bind(this)} noValidate>
             <input type="email" ref="email" name="email" placeholder="Email" />
-            <input type="password" ref="password" name="password" placeholder="Password" />
+            <input id='passwrd' 
+              onFocus={this.openPwdTtip.bind(this)}
+              onBlur={this.closePwdTtip.bind(this)} 
+                  type="password" 
+              ref="password" 
+              name="password" 
+              placeholder="Password (6-8 characters)" />
+            <Tooltip active={this.state.pwdTtipActive} position='right' arrow='center' parent='#passwrd'>
+              <div className='tooltip__content'>
+                <p>Must contain letters, digits and special characters (at least 1 of each)</p>
+              </div>
+            </Tooltip>
             <input type="password" ref="rePassword" name="rePassword" placeholder="Re-enter your password" />
             <button className='button'>Create Account</button>
           </form>

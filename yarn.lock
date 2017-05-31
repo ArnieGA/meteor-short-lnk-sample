@@ -535,7 +535,7 @@ node-uuid@^1.4.8:
   version "1.4.8"
   resolved "https://registry.yarnpkg.com/node-uuid/-/node-uuid-1.4.8.tgz#b040eb0923968afabf8d32fb1f17f1167fdab907"
 
-object-assign@^4.1.0, object-assign@^4.1.1:
+object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
 
@@ -657,6 +657,12 @@ react-modal@^1.7.7:
     exenv "1.2.0"
     lodash.assign "^4.2.0"
     prop-types "^15.5.7"
+
+react-portal-tooltip@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/react-portal-tooltip/-/react-portal-tooltip-1.1.5.tgz#d65ab9d168c5a6eeee9109c7fbc99a50ce16802f"
+  dependencies:
+    object-assign "^4.0.1"
 
 react-router-dom@^4.1.1:
   version "4.1.1"

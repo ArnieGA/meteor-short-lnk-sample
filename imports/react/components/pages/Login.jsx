@@ -18,9 +18,12 @@ class Login extends React.Component {
         let password = this.refs.password.value.trim();
         if (!!email && !!password) {
             if (!this.validatePassword(password)) {
-                this.setState({ error: 'Invalid password. Passwords must be 6-8 characters long and include at least one Uppercase letter, one Lowercase letter, one digit and one special character.' });
-                this.refs.password.focus();
-                this.clearFields(['password']);
+                this.setState({ 
+                    error: 'Invalid login attempt. Please supply valid credentials.',
+                    invalidAttempts: this.state.invalidAttempts++
+                 });
+                this.clearFields();
+                this.refs.email.focus();
                 return;
             } else { this.setState({ error: '' }); }
 
@@ -69,7 +72,7 @@ class Login extends React.Component {
             <div className='boxed-view'>
                 <div className='boxed-view__box'>
                     <h1>Short Lnk</h1>
-                    {this.state.error ? <p>{this.state.error}</p> : undefined}
+                    {this.state.error ? <p className="boxed-view__error">{this.state.error}</p> : undefined}
                     <form className='boxed-view__form' onSubmit={this.onSubmit.bind(this)} noValidate>
                         <input type="email" ref="email" name="email" placeholder="Email" />
                         <input type="password" ref="password" name="password" placeholder="Password" />

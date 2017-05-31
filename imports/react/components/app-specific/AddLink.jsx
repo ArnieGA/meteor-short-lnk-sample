@@ -70,13 +70,14 @@ export default class AddLink extends React.Component {
                     onAfterOpen={()=>this.refs.host.focus()} 
                     onRequestClose={this.closeModal}>
                     <h1>AddLink</h1>
-                    {!!this.state.error ? <p>{this.state.error}</p> : undefined}
+                    {!!this.state.error ? <p className="boxed-view__error">{this.state.error}</p> : undefined}
                     <form className='boxed-view__form' onSubmit={this.onSubmit}>
-                        <div>
+                        <div className='boxed-view__child-container'>
                             <select name="protocols" ref="protocols">
                                 {this.renderProtocolOptions()}
                             </select>
                             <input type="text" ref="host" placeholder="URL host (address)"
+                                className='flex-child--expanded'
                                 value={this.state.typedUrl}
                                 onChange={this.onTypedUrlChange} />
                         </div>
