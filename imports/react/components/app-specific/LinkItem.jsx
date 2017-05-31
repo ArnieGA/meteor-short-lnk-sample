@@ -32,19 +32,21 @@ export default class LinkItem extends React.Component {
         const { lastVisited } = this.props;
         const visitMessage = visitedTimes === 1 ? `Visited ${visitedTimes} time` : visitedTimes > 1 ? `Visited ${visitedTimes} times` : 'Not visited yet';
         let lastVisitedMessage = (typeof this.props.lastVisitedAt === 'number') ? ` - (Last visited ${moment.unix(this.props.lastVisitedAt).fromNow()})` : '';
-        return <p>{`${visitMessage}${lastVisitedMessage}`}</p>
+        return <p className='item__message'>{`${visitMessage}${lastVisitedMessage}`}</p>
     }
     render(){
         return(
-            <div>
-                <p>{this.props.url}</p>
-                <p>{this.props.shortUrl}</p>
+            <div className='item'>
+                <h2>{this.props.url}</h2>
+                <p className='item__message'>{this.props.shortUrl}</p>
                 {this.renderStats()}
-                <a href={this.props.shortUrl} target='_blank'>Visit</a>
-                <button ref="copyButton" data-clipboard-text={this.props.shortUrl}>{this.state.copied ? 'Copied' : 'Copy'}</button>
-                <button ref="hideButton" onClick={this.setVisibility.bind(this)}>
-                    {this.props.visible ? 'Hide' : 'Unhide'}
-                </button>
+                <div className='item-buttons-container'>
+                    <a className='button button--pill button--link' href={this.props.shortUrl} target='_blank'>Visit</a>
+                    <button className='button button--pill' ref="copyButton" data-clipboard-text={this.props.shortUrl}>{this.state.copied ? 'Copied' : 'Copy'}</button>
+                    <button className='button button--pill' ref="hideButton" onClick={this.setVisibility.bind(this)}>
+                        {this.props.visible ? 'Hide' : 'Unhide'}
+                    </button>
+                </div>
             </div>
         );
     }

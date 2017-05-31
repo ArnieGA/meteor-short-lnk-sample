@@ -61,25 +61,30 @@ export default class AddLink extends React.Component {
     }
     render() {
         return (
-            <div>
-                <button onClick={this.openModal}>+ Add Link</button>
-                <Modal isOpen={this.state.openModal} contentLabel='Add link' 
+            <section>
+                <button className='button' onClick={this.openModal}>+ Add Link</button>
+                <Modal isOpen={this.state.openModal} 
+                    contentLabel='Add link' 
+                    className='boxed-view__box'
+                    overlayClassName='boxed-view boxed-view--modal'
                     onAfterOpen={()=>this.refs.host.focus()} 
                     onRequestClose={this.closeModal}>
                     <h1>AddLink</h1>
                     {!!this.state.error ? <p>{this.state.error}</p> : undefined}
-                    <form onSubmit={this.onSubmit}>
-                        <select name="protocols" ref="protocols">
-                            {this.renderProtocolOptions()}
-                        </select>
-                        <input type="text" ref="host" placeholder="URL host (address)"
-                            value={this.state.typedUrl}
-                            onChange={this.onTypedUrlChange} />
-                        <button>Add Link</button>
+                    <form className='boxed-view__form' onSubmit={this.onSubmit}>
+                        <div>
+                            <select name="protocols" ref="protocols">
+                                {this.renderProtocolOptions()}
+                            </select>
+                            <input type="text" ref="host" placeholder="URL host (address)"
+                                value={this.state.typedUrl}
+                                onChange={this.onTypedUrlChange} />
+                        </div>
+                        <button className='button'>Add Link</button>
+                        <button type='button' className='button button--secondary' onClick={this.closeModal}>Cancel</button>
                     </form>
-                    <button onClick={this.closeModal}>Cancel</button>
                 </Modal>
-            </div>
+            </section>
         );
     }
 }

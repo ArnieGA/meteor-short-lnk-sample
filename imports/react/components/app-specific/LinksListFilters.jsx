@@ -22,14 +22,17 @@ export default class LinksListFilters extends React.Component{
     }
     render(){
         return(
-            <div>
-                <div>
-                    <input id="chkShowHidden" type="checkbox" ref='showHidden' 
+            <section>
+                <div className='checkbox--labeled__container'>
+                    <input id="chkShowHidden" 
+                        className='checkbox--labeled'
+                        type="checkbox" 
+                        ref='showHidden' 
                         onChange={this.toggleHidden.bind(this)}
                         checked={this.state.showHidden} />
                     <label htmlFor="chkShowHidden">Show Hidden Links</label>
                 </div>
-            </div>
+            </section>
         );
     }
 }

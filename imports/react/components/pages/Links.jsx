@@ -7,10 +7,12 @@ import LinksList from '/imports/react/components/app-specific/LinksList';
 export default () => {
     return (
         <div>
-            <PrivateHeader title='Your Links' />
-            <LinksListFilters />
-            <AddLink />
-            <LinksList />
+            <PrivateHeader title='Short Lnk' />
+            <div className='page-container'>
+                <LinksListFilters />
+                <AddLink />
+                <LinksList />
+            </div>
         </div>
     );
 };
