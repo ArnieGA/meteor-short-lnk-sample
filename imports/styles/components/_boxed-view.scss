@@ -18,6 +18,9 @@
     padding: 2.4rem 5rem;
     text-align: center;
     width: 24rem;
+    &.wider-box {
+        width:30rem;
+    }
 }
 
 .boxed-view__form {
@@ -27,10 +30,6 @@
 
 .boxed-view__child-container {
     display: flex;
-}
-
-.flex-child--expanded {
-    flex-grow: 1;
 }
 
 .boxed-view__error {

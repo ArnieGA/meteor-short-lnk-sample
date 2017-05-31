@@ -65,7 +65,7 @@ export default class AddLink extends React.Component {
                 <button className='button' onClick={this.openModal}>+ Add Link</button>
                 <Modal isOpen={this.state.openModal} 
                     contentLabel='Add link' 
-                    className='boxed-view__box'
+                    className='boxed-view__box wider-box'
                     overlayClassName='boxed-view boxed-view--modal'
                     onAfterOpen={()=>this.refs.host.focus()} 
                     onRequestClose={this.closeModal}>
@@ -76,10 +76,10 @@ export default class AddLink extends React.Component {
                             <select name="protocols" ref="protocols">
                                 {this.renderProtocolOptions()}
                             </select>
-                            <input type="text" ref="host" placeholder="URL host (address)"
-                                className='flex-child--expanded'
+                            <input type="text" ref="host" placeholder="URL host"
                                 value={this.state.typedUrl}
-                                onChange={this.onTypedUrlChange} />
+                                onChange={this.onTypedUrlChange}
+                                style={{width: '75%'}} />
                         </div>
                         <button className='button'>Add Link</button>
                         <button type='button' className='button button--secondary' onClick={this.closeModal}>Cancel</button>
