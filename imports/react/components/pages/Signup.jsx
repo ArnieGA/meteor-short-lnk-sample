@@ -10,7 +10,7 @@ class Signup extends React.Component {
     super(props);
     this.state = {
       error: '',
-      pwdTtipActive: false
+      pwdTtipActive: false // <- maintains the password modal open/close state
     };
     this.validatePassword = this.validatePassword.bind(this);
     this.clearFields = this.clearFields.bind(this);
@@ -70,6 +70,7 @@ class Signup extends React.Component {
       });
     }
   }
+  // TOOLTIP ACTIONS
   openPwdTtip(){
     this.setState({pwdTtipActive: true});
   }

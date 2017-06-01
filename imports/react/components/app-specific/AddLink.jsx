@@ -3,7 +3,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import uuid from 'node-uuid';
 
-const allowedProtocols = ['http', 'https', 'ftp'];
+const protocolOptions = ['http', 'https', 'ftp'];
 
 export default class AddLink extends React.Component {
     constructor(props) {
@@ -11,10 +11,12 @@ export default class AddLink extends React.Component {
         this.state = {
             typedUrl: '',
             openModal: false,
-            error: ''
+            error: '',
+            selectedProtocol: protocolOptions[0]
         };
         this.onSubmit = this.onSubmit.bind(this);
         this.onTypedUrlChange = this.onTypedUrlChange.bind(this);
+        this.onProtocolChange = this.onProtocolChange.bind(this);
         this.resetModal = this.resetModal.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
@@ -23,9 +25,7 @@ export default class AddLink extends React.Component {
         e.preventDefault();
         const host = this.state.typedUrl;
         if (!!host) {
-            const selectedIndex = this.refs.protocols.options.selectedIndex;
-            const selectedProtocol = this.refs.protocols.options[selectedIndex].text;
-            Meteor.call('links.insert', selectedProtocol, host, (err, response) => {
+            Meteor.call('links.insert', `${this.state.selectedProtocol}://`, host, (err, response) => {
                 if (!err) {
                     this.setState({ openModal: false });
                     this.resetModal();
@@ -44,8 +44,11 @@ export default class AddLink extends React.Component {
     onTypedUrlChange(e) {
         this.setState({ typedUrl: e.target.value.trim() });
     }
+    onProtocolChange(e){
+        this.setState({selectedProtocol: this.refs.protocols.value});
+    }
     renderProtocolOptions() {
-        return allowedProtocols.map((protocol) => {
+        return protocolOptions.map((protocol) => {
             return <option key={`protocol_${uuid()}`} value={protocol}>{`${protocol}://`}</option>
         });
     }
@@ -73,7 +76,9 @@ export default class AddLink extends React.Component {
                     {!!this.state.error ? <p className="boxed-view__error">{this.state.error}</p> : undefined}
                     <form className='boxed-view__form' onSubmit={this.onSubmit}>
                         <div className='boxed-view__child-container'>
-                            <select name="protocols" ref="protocols">
+                            <select ref='protocols' name='protocols' className='protocol-select' 
+                                onChange={this.onProtocolChange}
+                                value={this.state.selectedProtocol} >
                                 {this.renderProtocolOptions()}
                             </select>
                             <input type="text" ref="host" placeholder="URL host"
