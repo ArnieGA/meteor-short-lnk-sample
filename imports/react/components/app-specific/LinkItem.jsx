@@ -27,6 +27,11 @@ export default class LinkItem extends React.Component {
     setVisibility(){
         Meteor.call('links.setVisibility', this.props._id, !this.props.visible)
     }
+    removeLink(){
+        if(confirm(`Do you really want to remove this link (${this.props.url})?`)){
+            Meteor.call('links.remove', this.props._id);
+        }
+    }
     renderStats(){
         const visitedTimes = this.props.visitedCount;
         const { lastVisited } = this.props;
@@ -46,6 +51,7 @@ export default class LinkItem extends React.Component {
                     <button className='button button--pill' ref="hideButton" onClick={this.setVisibility.bind(this)}>
                         {this.props.visible ? 'Hide' : 'Unhide'}
                     </button>
+                    <button className='button button--pill' ref='removeButton' onClick={this.removeLink.bind(this)}>Remove</button>
                 </div>
             </div>
         );

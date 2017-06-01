@@ -68,5 +68,12 @@ Meteor.methods({
                 visitedCount: 1
             }
         });
+    },
+    'links.remove'(_id){
+        if(!this.userId) throw new Meteor.error('auth-error');
+        new SimpleSchema({
+            _id: {type: String, min: 1}
+        }).validate({_id});
+        LinksDb.remove({userId: this.userId, _id});
     }
 });
