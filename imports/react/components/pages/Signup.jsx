@@ -41,8 +41,7 @@ class Signup extends React.Component {
       Accounts.createUser({ email, password }, (err) => {
         if (err) {
           this.setState({ error: err.reason });
-          this.refs.email.value = '';
-          this.refs.password.value = '';
+          this.clearFields();
           this.refs.email.focus();
         } else {
           this.setState({ error: '' });
