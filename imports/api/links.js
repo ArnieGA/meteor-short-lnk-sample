@@ -24,7 +24,7 @@ if(Meteor.isServer){
 Meteor.methods({
     'links.insert'(protocol, host) {
         if (!this.userId) {
-            throw new Meteor.error('auth-error');
+            throw new Meteor.Error('auth-error');
         }
         // Validate the URL (NOTE: refer to /imports/startup/simple-schema-config.js)
         urlSchema.validate({ url: protocol + host });
@@ -44,7 +44,7 @@ Meteor.methods({
         });
     },
     'links.setVisibility'(linkId, newVisibility){
-        if(!this.userId) throw new Meteor.error('auth-error');
+        if(!this.userId) throw new Meteor.Error('auth-error');
         new SimpleSchema({
             _id: {type: String, min: 1},
             visible: {type: Boolean}
@@ -70,7 +70,7 @@ Meteor.methods({
         });
     },
     'links.remove'(_id){
-        if(!this.userId) throw new Meteor.error('auth-error');
+        if(!this.userId) throw new Meteor.Error('auth-error');
         new SimpleSchema({
             _id: {type: String, min: 1}
         }).validate({_id});
