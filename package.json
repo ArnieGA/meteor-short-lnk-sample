@@ -21,6 +21,6 @@
 		"react-portal-tooltip": "1.1.5",
 		"react-router-dom": "4.1.1",
 		"shortid": "2.2.8",
-		"simpl-schema": "0.3.0"
+		"simpl-schema": "1.10.2"
 	}
 }
